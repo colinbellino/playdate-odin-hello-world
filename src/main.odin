@@ -1,20 +1,11 @@
 package game
 
-import "core:fmt"
 import "core:c"
 import "core:c/libc"
-import "core:os"
-import "core:time"
-import "core:log"
-import "core:strings"
-import "core:runtime"
-import "core:mem"
-import "core:math/rand"
 
 import pd_api "pd_api"
 
 State :: struct {
-    ctx:          runtime.Context,
     pd:           ^pd_api.PlaydateAPI,
     font:         ^pd_api.LCDFont,
     text_x:       i32,
@@ -32,7 +23,6 @@ state: State
 eventHandler :: proc "c" (playdate: ^pd_api.PlaydateAPI, event: pd_api.PDSystemEvent, arg: u32) -> c.int {
     #partial switch event {
         case .kEventInit: {
-            state.ctx = runtime.default_context()
             state.pd = playdate
             state.pd.display.setRefreshRate(60)
             state.pd.system.setUpdateCallback(update, &state)
@@ -59,16 +49,15 @@ update :: proc "c" (userdata: rawptr) -> c.int {
 
     state.pd.graphics.clear(c.uintptr_t(pd_api.LCDSolidColor.kColorWhite))
     state.pd.graphics.setFont(state.font)
+
     text : cstring = "Hello World!"
     state.pd.graphics.drawText(text, libc.strlen(text), pd_api.PDStringEncoding.kUTF8Encoding, state.text_x, state.text_y)
-
+    
     state.text_x += state.text_delta_x
     state.text_y += state.text_delta_y
-
     if state.text_x < 0 || state.text_x > pd_api.LCD_COLUMNS - TEXT_WIDTH {
         state.text_delta_x = -state.text_delta_x
     }
-    
     if state.text_y < 0 || state.text_y > pd_api.LCD_ROWS - TEXT_HEIGHT {
         state.text_delta_y = -state.text_delta_y
     }
