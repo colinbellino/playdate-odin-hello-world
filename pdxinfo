@@ -1,0 +1,4 @@
+name=Hello World
+author=Colin Bellino
+description=Playdate hello world using Odin.
+bundleID=com.colinbellino.odin-hello-world
