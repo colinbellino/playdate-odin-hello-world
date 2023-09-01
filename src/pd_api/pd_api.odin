@@ -1,6 +1,6 @@
-package pd_api
+package odin_pd_api
 
-foreign import "pd_api"
+foreign import pd_api "pd_api"
 
 import c "core:c"
 
