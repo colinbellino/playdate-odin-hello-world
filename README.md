@@ -11,4 +11,4 @@ Only tested on Windows/Mac/Linux at the moment, but should probably work on othe
 
 This should build the game (into the `Source` folder) and run it into the Playdate simulator.
 
-![Playdate Simulator running the hello world example](./simulator.png)
+![An animated gif of the Playdate Simulator running the hello world example](./hello-world.gif)
