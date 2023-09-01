@@ -189,6 +189,7 @@ SpriteCollisionResponseType :: enum i32 {
     kCollisionTypeBounce,
 }
 
+PDButtonsBitSet :: bit_set[PDButtons]
 PDButtons :: enum i32 {
     kButtonLeft = 1,
     kButtonRight = 2,
@@ -390,7 +391,7 @@ playdate_sprite :: struct {
     setCollideRect : #type proc "c" (sprite : ^LCDSprite, collideRect : PDRect),
     getCollideRect : #type proc "c" (sprite : ^LCDSprite) -> PDRect,
     clearCollideRect : #type proc "c" (sprite : ^LCDSprite),
-    setCollisionResponseFunction : #type proc "c" (sprite : ^LCDSprite, func : ^LCDSpriteCollisionFilterProc),
+    setCollisionResponseFunction : #type proc "c" (sprite : ^LCDSprite, func : LCDSpriteCollisionFilterProc),
     checkCollisions : #type proc "c" (sprite : ^LCDSprite, goalX : c.float, goalY : c.float, actualX : ^c.float, actualY : ^c.float, len : ^c.int) -> ^SpriteCollisionInfo,
     moveWithCollisions : #type proc "c" (sprite : ^LCDSprite, goalX : c.float, goalY : c.float, actualX : ^c.float, actualY : ^c.float, len : ^c.int) -> ^SpriteCollisionInfo,
     querySpritesAtPoint : #type proc "c" (x : c.float, y : c.float, len : ^c.int) -> ^^LCDSprite,
@@ -1000,7 +1001,7 @@ foreign pd_api {
     // PDRectMake :: proc(x : c.float, y : c.float, width : c.float, height : c.float) -> PDRect ---
 }
 
-PDRectMake :: proc(x : c.float, y : c.float, width : c.float, height : c.float) -> PDRect {
+PDRectMake :: proc "c" (x : c.float, y : c.float, width : c.float, height : c.float) -> PDRect {
     r : PDRect = { x = x, y = y, width = width, height = height }
     return r
 }
