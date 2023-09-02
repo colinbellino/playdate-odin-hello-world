@@ -1,6 +1,3 @@
-mkdir Source
-cp pdxinfo Source
-
 game_bin="OdinHelloWorld"
 
 odin build src -out=Source/pdex -debug -build-mode:shared && \
